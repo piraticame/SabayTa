@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+p{
+    margin-bottom: 0px;
+}
+
+.wrapper{
+    width: 100%;
+    padding: 15px;
+}
+
+.headerContent{
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.headerContent img{
+    width: 35px;
+}
+
+.loginFormDetails{
+    padding-left: 20px;
+    margin-top: 15px;
+}
+
+.loginFormDetails h1{
+    font-weight: bold;
+    color: rgb(9, 9, 9);
+}
+
+.loginFormDetails h6{
+    font-size: 18px;
+    color: #6E6E6E;
+    font-weight: 400;
+}
+
+.loginFormDetails .welcomeText{
+    margin-top: 20px;
+}
+
+
+.RegisterFormContainer{
+    margin-top: 30px;
+    padding-left: 20px;
+    color: #6E6E6E;
+}
+
+.RegisterFormContainer .fNameReg input{
+    width: 90%;
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid #9e9e9e;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.RegisterFormContainer .mNameReg {
+    margin-top: 10px;
+}
+ 
+.RegisterFormContainer .mNameReg input{
+    width: 90%;
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid #9e9e9e;
+    padding-left: 10px;
+    font-size: 14px;
+}   
+
+
+.RegisterFormContainer .lNameReg {
+    margin-top: 10px;
+}
+ 
+.RegisterFormContainer .lNameReg input{
+    width: 90%;
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid #9e9e9e;
+    padding-left: 10px;
+    font-size: 14px;
+}  
+
+.RegisterFormContainer .GenderPhoneContainer{
+    display: flex;
+    margin-top: 10px;
+}
+
+.GenderPhoneContainer .phoneNumber{
+    margin-right: 15px;
+}
+
+.GenderPhoneContainer .phoneNumber input{
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid #9e9e9e;
+    width: 172px;
+    font-size: 14px;
+}
+
+.GenderPhoneContainer .gender select{
+    height: 37px;
+    width: 105px;
+    border: 1px solid #6E6E6E;
+}
+
+.footer button{
+    border: none;
+    background-color: #1ECEB2;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    width: 86%;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-top: 50px;
+}

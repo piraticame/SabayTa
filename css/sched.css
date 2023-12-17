@@ -1,0 +1,352 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+p{
+    margin-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin-bottom: 0;
+}
+
+.wrapper{
+    width: 100%;
+}
+
+.header-Container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.header-Container .img1{
+    width: 30px;
+    margin-top: 10px;
+}
+
+.header-Container .circleWhite{
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 15px;
+    background-color: #1ECEB2;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 6px;
+    width: 120px;
+    border-radius: 4px;
+    margin-left: 235px;
+}
+
+.header-Container .circleWhite i{
+    font-size: 9px;
+    padding-left: 6px;
+}
+
+.header-Container .circleWhite button{
+    border: none;
+    background-color: #1ECEB2;
+    color: white;
+    font-weight: 600;
+    float: right;
+    width: 100%;
+}
+
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    border: 1px solid;
+    display: flex;
+    width: 90%;
+    background-color: white;
+    border: none;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 40%);
+    margin-top: 20px;
+}
+
+.card .topCardContainer{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    
+}
+
+.card .topCardContainer .top-leftContainer .status{
+    display: flex;
+    font-size: 10px;
+    margin-top: 5px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card .topCardContainer .top-leftContainer .status p{
+    background-color: #F7BB48;
+    padding: 4px;
+    color: white;
+    width: 120px;
+    font-size: 8px;
+    border-radius: 50px;
+}
+
+.card .topCardContainer .top-leftContainer h6{
+    font-size: 18px;
+}
+
+.card .topCardContainer .top-leftContainer .status .waitining{
+    margin-right: 6px;
+    width: 70px;
+    background-color: #23E6C7;
+}
+
+.card .topCardContainer .top-RighttContainer button{
+    color: white;
+    background-color: #1ECEB2;
+    border: none;
+    font-size: 8px;
+    width: 80px;
+    border-radius: 100px;
+    padding: 4px;
+}
+
+.bottomCardContainer{
+    display: flex;
+    padding: 15px;
+    padding-top: 5px;
+}
+
+.bottomCardContainer .bottom-leftContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.bottomCardContainer .bottom-leftContainer .destinationChart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomCardContainer .bottom-leftContainer .destinationChart img{
+    width: 30px;
+    padding-top: 10px;
+}
+
+.bottomCardContainer .bottom-leftContainer .destinationChart .line{
+    width: 210px;
+    height: 1px;
+    border: 2px dashed black;
+}
+
+.bottomCardContainer .destinationDetails{
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottomCardContainer .destinationDetails .meetinPlace{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 1px 0px 4px rgba(0, 0, 0, 25%);
+    width: 110px;
+    padding: 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.bottomCardContainer .destinationDetails .meetinPlace p{
+    font-size: 6px;
+    margin-top: 4px;
+}
+
+.bottomCardContainer .destinationDetails .meetinPlace .cardMeeting{
+    display: flex;
+    font-size: 10px;
+    color: #23E6C7;
+    font-weight: bold;
+}
+
+.bottomCardContainer .destinationDetails .meetinPlace .cardMeeting p{
+    margin-left: 3px;
+    margin-top: 0px;
+    font-size: 8px;
+}
+
+.bottom-RighttContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.VacantContainer{
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #203E39;
+    color: white;
+    font-weight: bold;
+    width: 100ox;
+    font-size: 14px;
+    text-align: center;
+}
+
+.VacantContainer .vacant{
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.modal-dialog{
+    width: 80%;
+    margin-left: 40px;
+    margin-top: 70px;
+}
+
+
+.scheduleContainer{
+    margin-top: 10px;
+}
+
+.scheduleContainer .inputSched div{
+    background-color: #1ECEB2;
+    padding: 6px;
+    border-radius: 4px;
+    width: 40px;
+    position: absolute;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.scheduleContainer .inputSched{
+    position: relative;
+}
+
+.scheduleContainer  p{
+    font-size: 12px;
+}
+
+.scheduleContainer .inputSched input{
+    width: 100%;
+    height: 37px;
+    border-radius: 4px;
+    border: 1px solid #acacac;
+    padding-left: 50px;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.modalBtn{
+    text-align: right;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.modalBtn .cancel{
+    width: 80px;
+    padding: 6px;
+    border: none;
+    background-color: #D9D9D9;
+    color: white;
+    border-radius: 2px;
+    font-size: 14px;
+    margin-right: 3px;
+}
+
+
+.modalBtn .create{
+    width: 80px;
+    padding: 6px;
+    border: none;
+    background-color: #1ECEB2;
+    color: white;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.container{
+    top: 10px;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-radius: 50px;
+    position: absolute;
+    transition: 0.4s ease-in-out;
+    margin-left: 20px;
+    z-index: 1;
+}
+
+.header-Container .img1{
+    margin-top: 20px;
+    width: 25px;
+}
+
+.navItems{
+    width: 100%;
+    padding: 0;
+    visibility: hidden;
+    margin-top: 20px;
+    margin-left: -10px;
+}
+
+.container.active .navItems{
+    visibility: visible;
+}
+
+li{
+    list-style-type: none;
+}
+
+li a{
+    color: black;
+}
+
+li a span{
+    position: absolute;
+    font-size: 12px;
+    margin: 10px 0px;
+    font-weight: 500;
+    color: #203E39;
+}
+
+li a i{
+    position: relative;
+    display: block;
+    font-size: 12px;
+    padding: 20px 20px;
+    width: 200%;
+    text-align: center;
+    letter-spacing: 2px;
+    transform: scale(0);
+    background-color: white;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 40%);
+    border-radius: 50px;
+    margin-bottom: 10px;
+}
+
+.container.active .navItems li a i{
+    transform: scale(1);
+    transition: 0.4s ease;
+    transition-delay: calc(0.08s * var(--1));
+}
+
+.container.active .navItems li:hover a i{
+    transition: 0.2s ease-in-out;
+    color: #1ECEB2;
+}
+
+.container.active .navItems li a span{
+    transform: translateX(15px);
+    transition: 0.4s ease;
+    transition-delay: calc(0.08s * var(--g));
+}
