@@ -62,7 +62,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Encrypt user credentials
-    $encryptedUsername = Ascon::encryptToHex($secretKey, $username);
+    $encryptedUsername =  $username;
     $encryptedPassword = Ascon::encryptToHex($secretKey, $password);
 
     // Process file upload
@@ -85,20 +85,29 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         echo 'No file uploaded.';
     }
 
-    $encryptedpath = Ascon::encryptToHex($secretKey, $path);
+    $encryptedpath = Ascon::encryptToHex($secretKey, $targetPath);
     // Insert encrypted data and file path into the database
     $sql = "INSERT INTO users (username, password, profile)
             VALUES ('$encryptedUsername', '$encryptedPassword', '$encryptedpath')";
 
-    if ($conn->query($sql) === TRUE) {
-        
-        $_SESSION['username'] = $username;
-        
-        header('Location: FinalRegister.php');
-        echo 'User registered successfully.';
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+if ($conn->query($sql) === TRUE) {
+    $_SESSION['username'] = $username;
+
+    // Display SweetAlert notification
+    echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Your account has been created.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'FinalRegister.php';
+            });
+          </script>";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
 }
 
 ?>

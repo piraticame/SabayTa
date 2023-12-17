@@ -65,7 +65,6 @@ if (isset($_SESSION['username'])){
                     <select name="gender" id="gender">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
-                        <option value="Pest">Pest</option>
                     </select>
                 </div>
             </div>
@@ -91,7 +90,7 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['pho
     $gender = $_POST['gender'];
 
     // Decrypt the session username
-    $decryptedUsername = Ascon::encryptToHex($secretKey, $_SESSION['username']);
+    $user = $_SESSION['username'];
 
     // Encrypt other user details
     $encryptedFirstname = Ascon::encryptToHex($secretKey, $firstname);
@@ -103,15 +102,25 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['pho
     // Update user details based on the decrypted session username
     $sql = "UPDATE users 
             SET firstname='$encryptedFirstname', middlename='$encryptedMiddlename', lastname='$encryptedLastname', phone='$encryptedPhone', gender='$encryptedGender'
-            WHERE username = '$decryptedUsername'";
+            WHERE username = '$user'";
 
-    if ($conn->query($sql) === TRUE) {
-        header('Location: Profile.php');
-        exit(); // Stop further execution
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+if ($conn->query($sql) === TRUE) {
+    // Display SweetAlert notification
+    echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Update Successful!',
+                text: 'Your profile has been updated.',
+                confirmButtonText: 'OK',
+                onClose: () => {
+                    window.location.href = 'MainPage.php';
+                }
+            });
+          </script>";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
 
-    }
 }
 
 
