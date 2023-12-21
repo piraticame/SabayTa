@@ -67,11 +67,11 @@ $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </li>
                 </ul>
             </div>
-            <div class="circleWhite">
-                <!-- Ward naa diri ang functions na if ma click ang search mo pop up ang input-->
+            <!-- <div class="circleWhite">
+                Ward naa diri ang functions na if ma click ang search mo pop up ang input
                 <input type="text" style="display: none;">
                 <img src="../Icons/search.svg" alt="">
-            </div>
+            </div> -->
         </div>
 
         <div class="mainContainer">

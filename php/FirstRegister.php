@@ -20,14 +20,42 @@
     <div class="wrapper">
         <form action="" method="POST" enctype="multipart/form-data">
         <div class="headerContent">
-            <a href="HomePage.html"><img src="../Icons/arrowLeft.svg" alt=""></a>
+            <a href="HomePage.php"><img src="../Icons/arrowLeft.svg" alt=""></a>
         </div>
-        <div class="loginFormDetails">
-            <img src="../Icons/cutemikey.svg" alt="">
-            <input type="file" id="uploadBtn" accept="image/*" style="display: none;" name="profile" required>
-            <i class="fa-solid fa-plus"></i>
-            <label for="uploadBtn">Choose File</label>
-        </div>
+        <!-- Your existing HTML code remains unchanged -->
+<div class="loginFormDetails">
+    <img id="previewImage" src="../Icons/male-user-icon-white.png" alt="">
+    <input type="file" id="uploadBtn" accept="image/*" style="display: none;" name="profile" required>
+    <i class="fa-solid fa-plus"></i>
+    <label for="uploadBtn">Choose File</label>
+</div>
+
+<script>
+    // Function to handle file input change
+    document.getElementById('uploadBtn').addEventListener('change', function (event) {
+        var previewImage = document.getElementById('previewImage');
+
+        // Check if a file is selected
+        if (event.target.files.length > 0) {
+            var selectedFile = event.target.files[0];
+
+            // Validate that the selected file is an image
+            if (selectedFile.type.startsWith('image/')) {
+                // Read the selected file and update the image preview
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(selectedFile);
+            } else {
+                // Reset the file input if the selected file is not an image
+                event.target.value = '';
+                alert('Please choose a valid image file.');
+            }
+        }
+    });
+</script>
+
         <div class="RegisterFormContainer">
             <div class="fNameReg">
                 <p>Username</p>
