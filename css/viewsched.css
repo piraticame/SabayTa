@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, h6{
     font-weight: bold;
     margin-right: 20px;
     margin-top: 25px;
-    background-color: #1ECEB2;
+    background-color: #d32001;
     color: white;
     display: flex;
     justify-content: space-evenly;
@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6{
 
 .header-Container .circleWhite button{
     border: none;
-    background-color: #1ECEB2;
+    background-color: #1af374;
     color: white;
     font-weight: 600;
     margin-left: -8px;

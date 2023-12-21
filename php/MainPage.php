@@ -6,7 +6,7 @@ if (!isset($_SESSION['username'])) {
 }
 require_once 'db.php';
 include 'Ascon.php';
-$sql = "SELECT * FROM post WHERE status != 'Done' ORDER BY createdAt DESC";
+$sql = "SELECT * FROM post WHERE status != 'Done' AND status != 'Deleted' ORDER BY createdAt DESC";
 $result = mysqli_query($conn, $sql);
 $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //echo the $posts

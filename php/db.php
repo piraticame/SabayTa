@@ -57,11 +57,22 @@ if ($conn->query($sql2) === TRUE) {
         ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
         DO
         BEGIN
-            UPDATE post SET status = 'Done' WHERE meetingTime < CURTIME() AND status <> 'Done';
+            UPDATE post SET status = 'Done' WHERE meetingTime < CURTIME() AND status <> 'Done' AND status <> 'Deleted';
         END;
     ";
     
         if ($conn->query($sqlCreateEvent) === TRUE) {
+            $sqlCreateEventDeleted = "
+            CREATE EVENT IF NOT EXISTS update_post_status_deleted_event
+            ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
+            DO
+            BEGIN
+                UPDATE post SET status = 'Deleted' 
+                WHERE TIMESTAMPDIFF(HOUR, CONCAT(CURDATE(), ' ', meetingTime), NOW()) >= 2 
+                AND status NOT IN ('Deleted', 'Done');
+            END;
+                ";
+        $conn->query($sqlCreateEventDeleted);
         } else {
             echo "Error creating trigger: " . $conn->error;
         }

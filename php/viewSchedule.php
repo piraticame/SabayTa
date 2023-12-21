@@ -76,11 +76,35 @@ $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </li>
                 </ul>
             </div>
-            <!-- <div class="circleWhite">
-               
-                <img src="../Icons/edit.svg" alt="" width="13px">
-                <button>Edit Schedule</button>
-            </div> -->
+            <div class="circleWhite" style="background-color: red">
+            <form action="" method="post">
+                    <input type="hidden" name="post_id" value="<?php echo $postId; ?>">
+                <button name="deletedButton" type="submit" style="background-color: red;">Delete Schedule</button>
+                </form>
+            </div>
+            <?php
+            if (isset($_POST['deletedButton'])) {
+                $postId = $_POST['post_id'];
+                $sql = "UPDATE post SET status = 'Deleted' WHERE id = '$postId'";
+                $result = mysqli_query($conn, $sql);
+                if ($result) {
+                    echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Done!',
+                    text: 'Schedule deleted.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'Schedule.php';
+                });
+            </script>";
+                } else {
+                    echo "<script>alert('Schedule Not Deleted!');</script>";
+                }
+            }
+            
+
+            ?>
         </div>
 
         <?php foreach ($posts as $post): ?>
@@ -191,6 +215,42 @@ $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             const timestamp = element.getAttribute('data-timestamp');
             const formattedDate = formatTimestampToMonthWord(timestamp);
             element.textContent = formattedDate;
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to handle the "Delete Schedule" button click
+        document.querySelector('[name="deletedButton"]').addEventListener('click', function () {
+            // Assuming you have a confirmation before deleting
+            if (confirm("Are you sure you want to delete this schedule?")) {
+                // Get the post ID from the data attribute
+                var postId = <?php echo json_encode($postId); ?>;
+
+                // Use AJAX to communicate with the server
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Handle the response from the server
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                // Redirect or update the UI as needed
+                                window.location.href = 'Schedule.php';
+                            } else {
+                                alert('Failed to delete schedule. Please try again.');
+                            }
+                        } else {
+                            alert('Failed to delete schedule. Please try again.');
+                        }
+                    }
+                };
+
+                // Send an AJAX request to delete the schedule
+                xhr.open('POST', 'delete_schedule.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send('post_id=' + postId);
+            }
         });
     });
 </script>

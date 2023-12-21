@@ -17,7 +17,7 @@ if ($result) {
     // Get posts that the user has joined
     $sqlJoined = "SELECT p.* FROM joined j
                   JOIN post p ON j.post_id = p.id
-                  WHERE j.user_id = '$userId' ORDER BY p.createdAt DESC";
+                  WHERE j.user_id = '$userId' AND p.status !='Deleted' ORDER BY p.createdAt DESC";
     $resultJoined = $conn->query($sqlJoined);
 
     // Check for query success for joined posts
