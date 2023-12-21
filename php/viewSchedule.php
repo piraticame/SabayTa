@@ -1,10 +1,20 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: ../index.php');
+    exit;
+}
 require_once 'ascon.php';
 require_once 'db.php';
-$userId = $_SESSION['userId'];
+
+$user = $_SESSION['username'];
+$userId = "SELECT id FROM users WHERE username = '$user'";
+$result = mysqli_query($conn, $userId);
+$userId = mysqli_fetch_assoc($result);
+$userId = $userId['id'];
+ 
 $postId = $_POST['post_id'];
-$sql = "SELECT * FROM post where user_id = '$userId' and id = '$postId'";
+$sql = "SELECT * FROM post where id = '$postId'";
 $result = mysqli_query($conn, $sql);
 $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //echo the $posts
@@ -59,7 +69,7 @@ $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="logout.php">
                             <i class="fa-solid fa-right-from-bracket"></i>
                             
                         </a>

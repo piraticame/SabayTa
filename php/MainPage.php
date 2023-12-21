@@ -1,7 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: ../index.php');
+    exit;
+}
 require_once 'db.php';
 include 'Ascon.php';
+$sql = "SELECT * FROM post WHERE status != 'Done' ORDER BY createdAt DESC";
+$result = mysqli_query($conn, $sql);
+$posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//echo the $posts
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +60,7 @@ include 'Ascon.php';
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="logout.php">
                             <i class="fa-solid fa-right-from-bracket"></i>
                             
                         </a>
@@ -66,55 +75,67 @@ include 'Ascon.php';
         </div>
 
         <div class="mainContainer">
-            <div class="card">
-                <div class="topCardContainer">
-                    <div class="top-leftContainer">
-                        <h6>Michael C. Labastida</h6>
+        <?php foreach ($posts as $post): ?>
+                <div class="card">
+                    <div class="topCardContainer">
+                        <div class="top-leftContainer">
+                            <h6><?php echo $post['name']; ?></h6>
                             <div class="status">
-                                <p class="waitining">Waiting</p>
-                                <p>Meeting Time: 8:30 PM</p>
+                                <p class="waiting"><?php echo $post['status']; ?></p>
+                                <p class="meeting-time"><?php echo $post['meetingTime']; ?></p>
                             </div>
-                    </div>  
-                    <div class="top-RighttContainer"> 
-                        <button>Sabay Ko</button>
+                        </div> 
+                        
+                        <div class="top-RighttContainer"> 
+                        <form action="sabay.php" method="POST">
+                        <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                        <div class="top-RighttContainer"> 
+                            <button type="submit" name="view">Sabay Ko</button>
+                        </div>
+                     </form> 
+                        </div>
+                    </div>
+                    <div class="bottomCardContainer">
+                        <div class="bottom-leftContainer">
+                            <div class="destinationChart">
+                                <img src="../Icons/Destination.svg" alt="">
+                                <div class="line"></div>
+                                <img src="../Icons/Destination1.svg" alt="">
+                            </div>
+                            <div class="destinationDetails">
+                                <div class="meetinPlace">
+                                    <div class="cardMeeting">
+                                        <img src="../Icons/location.svg" alt="" width="8px">
+                                        <p>Meeting Location</p>
+                                    </div>
+                                    <p><?php echo $post['fromLocation']; ?></p>
+                                </div>
+                                <div class="meetinPlace">
+                                    <div class="cardMeeting">
+                                        <img src="../Icons/location.svg" alt="" width="10px">
+                                        <p>Destination</p>
+                                    </div>
+                                    <p><?php echo $post['toLocation']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        $postId = $post['id'];
+                        $sqlJoined = "SELECT COUNT(*) AS joinedcount FROM joined WHERE post_id = '$postId'";
+                        $result = $conn->query($sqlJoined);
+                        $row = $result->fetch_assoc();
+                        $count = $row['joinedcount'];
+
+                        ?>
+                        <div class="bottom-RighttContainer"> 
+                            <div class="VacantContainer">
+                                <p class="vacant">Vacant</p>
+                                <p><?php echo $count; ?>/6</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="bottomCardContainer">
-                    <div class="bottom-leftContainer">
-                        <div class="destinationChart">
-                            <img src="../Icons/Destination.svg" alt="">
-                            <div class="line"></div>
-                            <img src="../Icons/Destination1.svg" alt="">
-                        </div>
-                        <div class="destinationDetails">
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="8px">
-                                    <p>Meeting Location</p>
-                                </div>
-                                <p>University of Southeastern Philippines
-                                    sa may bakeryhan.
-                                </p>
-                            </div>
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="10px">
-                                    <p>Destination</p>
-                                </div>
-                                <p>New Historical Park , sa may jolibee
-                                    mo hunong.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bottom-RighttContainer"> 
-                        <div class="VacantContainer">
-                            <p class="vacant">Vavant</p>
-                            <p>5/6</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
 
 
             
@@ -133,8 +154,23 @@ include 'Ascon.php';
 </body>
 </html>
 
-<?php
+<script>
+        // Function to convert 24-hour time format to 12-hour format
+        function convertTo12HourFormat(timeString) {
+            // Create a new Date object and set the time
+            var date = new Date('2000-01-01T' + timeString);
+            
+            // Format the time to 12-hour format
+            var formattedTime = date.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
 
+            return formattedTime;
+        }
 
-
-?>
+        // Iterate over the posts and update the meeting time display
+        var meetingTimeElements = document.querySelectorAll('.meeting-time');
+        meetingTimeElements.forEach(function(element) {
+            var originalTime = element.textContent.trim();
+            var formattedTime = convertTo12HourFormat(originalTime);
+            element.textContent = 'Meeting Time: ' + formattedTime;
+        });
+    </script>

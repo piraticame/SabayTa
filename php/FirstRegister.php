@@ -36,7 +36,7 @@
 
             <div class="mNameReg">
                 <p>Password</p>
-                <input type="text" name="password" id="password" required>
+                <input type="password" name="password" id="password" required>
             </div>
 
             <div class="termsCondition">

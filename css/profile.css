@@ -60,13 +60,15 @@ h1, h2, h3, h4, h5, h6{
 .mainContainer .Userprofile-container .backgroundProfile{
     background-color: #56DAC5;
     padding: 8px;
-    border-radius: 100px;
+    border-radius: 100%;
 }
 
-.mainContainer .Userprofile-container .userprofile{
-    border-radius: 100px;
+.mainContainer .Userprofile-container .userprofile {
+    border-radius: 100%;
     width: 130px;
+    height: 130px;
 }
+
 
 .mainContainer .Userprofile-container .edit{
     position: absolute;
@@ -102,7 +104,6 @@ h1, h2, h3, h4, h5, h6{
     height: 30px;
     border: 1px solid #9e9e9e ;
     border-radius: 2px;
-    padding-left: 10px;
 }
 
 

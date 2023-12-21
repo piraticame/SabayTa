@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: ../index.php');
+    exit;
+}
 require_once 'ascon.php';
 require_once 'db.php';
 $username = $_SESSION['username'];
@@ -13,7 +17,7 @@ if ($result) {
     // Get posts that the user has joined
     $sqlJoined = "SELECT p.* FROM joined j
                   JOIN post p ON j.post_id = p.id
-                  WHERE j.user_id = '$userId' AND p.status != 'Done' ORDER BY p.createdAt DESC";
+                  WHERE j.user_id = '$userId' ORDER BY p.createdAt DESC";
     $resultJoined = $conn->query($sqlJoined);
 
     // Check for query success for joined posts
@@ -81,7 +85,7 @@ if ($result) {
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="logout.php">
                             <i class="fa-solid fa-right-from-bracket"></i>
                             
                         </a>
@@ -243,6 +247,7 @@ if (isset($_POST['submit'])) {
         $userId = $row['id'];
         $sqlPost = "INSERT INTO post (user_id, name, meetingTime, fromLocation, toLocation, joinedcount, status)
                 VALUES ('$userId', '$name', '$time', '$fromLocation', '$toLocation', '$joinedcount', '$status')";
+       
 
     if ($conn->query($sqlPost) === TRUE) {
         // Step 2: Fetch the ID of the newly inserted post

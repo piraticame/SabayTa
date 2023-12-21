@@ -5,16 +5,13 @@ $password = "";
 
 $conn = new mysqli($servername, $name, $password);
 
-
 $sql = "CREATE DATABASE IF NOT EXISTS sabaytadb";
-
 
 if ($conn->query($sql) === TRUE) {
 }
 $select = mysqli_select_db($conn, "sabaytadb");
 
-//create tables
-// Ensure that the users table is created first
+// create tables
 $sql2 = "CREATE TABLE IF NOT EXISTS users (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -30,7 +27,6 @@ $sql2 = "CREATE TABLE IF NOT EXISTS users (
 )";
 
 if ($conn->query($sql2) === TRUE) {
-    // Now create the post table with the foreign key reference
     $sql3 = "CREATE TABLE IF NOT EXISTS post (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         user_id INT(6) UNSIGNED NOT NULL,
@@ -52,10 +48,26 @@ if ($conn->query($sql2) === TRUE) {
             FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (post_id) REFERENCES post(id)
         )";
-        if ($conn->query($sql4) === TRUE) {
+       if ($conn->query($sql4) === TRUE) {
+        $sqlEnableEventScheduler = "SET GLOBAL event_scheduler = ON;";
+        $conn->query($sqlEnableEventScheduler);
+        
+        $sqlCreateEvent = "
+        CREATE EVENT IF NOT EXISTS update_post_status_event
+        ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
+        DO
+        BEGIN
+            UPDATE post SET status = 'Done' WHERE meetingTime < CURTIME() AND status <> 'Done';
+        END;
+    ";
+    
+        if ($conn->query($sqlCreateEvent) === TRUE) {
         } else {
-            echo "Error creating joined table: " . $conn->error;
+            echo "Error creating trigger: " . $conn->error;
         }
+    } else {
+        echo "Error creating joined table: " . $conn->error;
+    }
     } else {
         echo "Error creating post table: " . $conn->error;
     }
@@ -63,9 +75,5 @@ if ($conn->query($sql2) === TRUE) {
     echo "Error creating users table: " . $conn->error;
 }
 
-//users who joined the post
-
-
-
-    
+// users who joined the post
 ?>
