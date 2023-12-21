@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once 'ascon.php';
+require_once 'db.php';
+$userId = $_SESSION['userId'];
+$postId = $_POST['post_id'];
+$sql = "SELECT * FROM post where user_id = '$userId' and id = '$postId'";
+$result = mysqli_query($conn, $sql);
+$posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//echo the $posts
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,21 +38,21 @@
 
                 <ul class="navItems">
                     <li>
-                        <a href="">
+                        <a href="Mainpage.php">
                             <i class="fa-solid fa-house" style="--i:1" ></i>
         
                         </a>
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="Schedule.php">
                             <i class="fa-solid fa-clipboard-list"></i>
                             
                         </a>
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="Profile.php">
                             <i class="fa-solid fa-user"></i>
                           
                         </a>
@@ -54,30 +66,36 @@
                     </li>
                 </ul>
             </div>
-            <div class="circleWhite">
-                <!-- Ward naa diri ang functions na if ma click ang search mo pop up ang input-->
+            <!-- <div class="circleWhite">
+               
                 <img src="../Icons/edit.svg" alt="" width="13px">
                 <button>Edit Schedule</button>
-            </div>
+            </div> -->
         </div>
 
+        <?php foreach ($posts as $post): ?>
         <div class="mainContainer">
             <div class="topContainer">
                 <div class="top-UserContainer">
-                    <h3>Michael C. Labastida</h3>
-                    <p class="date">Date: January 23, 2003</p>
-                    <p class="vacant">Available Vacant: 5 out of 6</p>
+                    <h3><?php echo $post['name']; ?></h3>
+                    <p class="date" style="margin-left:3%; margin-top:3%" data-timestamp="<?php echo strtotime($post['createdAt']); ?>"></p>
+
+                    <p class="vacant">Joined: <?php echo $post['joinedcount'] ?> out of 6</p>
                 </div>
                 <div class="top-LocationContainer">
                     <div class="meetTime">
-                        <p>Meeting Time: 8:30 PM</p>
+                        <p class="meeting-time">
+                            <?php echo $post['meetingTime']; ?>
+                        </p>
                     </div>
                     <div class="meetLocation">
                         <div class="locTop">
                             <img src="../Icons/location.svg" alt="" width="15px">
                             <p>Meeting Location</p>
                         </div>
-                        <p>University of Southeastern Philippines sa may bakeryhan.</p>
+                        <p>
+                            <?php echo $post['fromLocation']; ?>
+                        </p>
                     </div>
 
                     <div class="meetLocation">
@@ -85,53 +103,58 @@
                             <img src="../Icons/location.svg" alt="" width="15px">
                             <p>Destination</p>
                         </div>
-                        <p>New Historical Park , sa may jolibee mo hunong.</p>
+                        <p>
+                            <?php echo $post['toLocation']; ?>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="bottomContainer">
                 <div class="pepConnect">
                     <img src="../Icons/radar.svg" alt="" width="25px">
-                    <p>People who connect</p>
+                    <p>People who joined</p>
                 </div>
-                <div class="userList">
-                    <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div>
+                <?php
+                $sql = "SELECT u.id, u.firstname, u.phone, u.profile 
+                        FROM joined j
+                        JOIN users u ON j.user_id = u.id
+                        WHERE j.post_id = '$postId'";
+
+                $result = mysqli_query($conn, $sql);
+                $joined = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            ?>
+
+            <div class="userList">
+                <?php foreach ($joined as $user): ?>
                     
                     <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div> 
+                        <?php
+                        $profile = $user['profile'];
+                        $decryptedProfile = Ascon::decryptFromHex($secretKey, $profile, "additionalData", "Ascon-128");
 
-                    <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div> 
+                        ?>
+                        <img src="<?php echo $decryptedProfile; ?>" alt="" width="100.5px" height="80px" style="object-fit: cover;">
+                        <h3><?php 
+                        $name = $user['firstname'];
+                        $decryptedName = Ascon::decryptFromHex($secretKey, $name, "additionalData", "Ascon-128");
+                        
+                        echo $decryptedName; ?></h3>
+                        <p>Phone: <?php
+                        //decryptFromHex
+                        $phone = $user['phone'];
+                        $decryptedPhone = Ascon::decryptFromHex($secretKey, $phone, "additionalData", "Ascon-128");
 
-                    <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div> 
+                         echo $decryptedPhone; ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-                    <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div> 
-                    <div class="userCard">
-                        <img src="../Icons/cutemikey.svg" alt="" width="100.5px" height="80px" style="object-fit: cover;">
-                        <h3>Michael C. Labastida</h3>
-                        <p>Contact Number: 09302241553</p>
-                    </div> 
-                </div>           
+                </div>       
+
             </div>
         </div>
+        
+        <?php endforeach; ?>
     </div>
 
     <script>
@@ -142,5 +165,46 @@
             container.classList.toggle('active');
         });
     </script>
+    <!-- Add this script to your HTML file -->
+<script>
+    // Function to format timestamp to worded format of the month
+    function formatTimestampToMonthWord(timestamp) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+        return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+
+    // Usage example
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateElements = document.querySelectorAll('.date');
+        dateElements.forEach(function(element) {
+            const timestamp = element.getAttribute('data-timestamp');
+            const formattedDate = formatTimestampToMonthWord(timestamp);
+            element.textContent = formattedDate;
+        });
+    });
+</script>
+
 </body>
 </html>
+
+<script>
+        // Function to convert 24-hour time format to 12-hour format
+        function convertTo12HourFormat(timeString) {
+            // Create a new Date object and set the time
+            var date = new Date('2000-01-01T' + timeString);
+            
+            // Format the time to 12-hour format
+            var formattedTime = date.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
+
+            return formattedTime;
+        }
+
+        // Iterate over the posts and update the meeting time display
+        var meetingTimeElements = document.querySelectorAll('.meeting-time');
+        meetingTimeElements.forEach(function(element) {
+            var originalTime = element.textContent.trim();
+            var formattedTime = convertTo12HourFormat(originalTime);
+            element.textContent = 'Meeting Time: ' + formattedTime;
+        });
+    </script>

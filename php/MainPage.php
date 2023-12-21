@@ -1,10 +1,14 @@
+<?php
+session_start();
+require_once 'db.php';
+include 'Ascon.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- LINKS/CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -33,14 +37,14 @@
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="Schedule.php">
                             <i class="fa-solid fa-clipboard-list"></i>
                             
                         </a>
                     </li>
 
                     <li>
-                        <a href="">
+                        <a href="Profile.php">
                             <i class="fa-solid fa-user"></i>
                           
                         </a>
@@ -112,106 +116,8 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="topCardContainer">
-                    <div class="top-leftContainer">
-                        <h6>Michael C. Labastida</h6>
-                            <div class="status">
-                                <p class="waitining">Waiting</p>
-                                <p>Meeting Time: 8:30 PM</p>
-                            </div>
-                    </div>  
-                    <div class="top-RighttContainer"> 
-                        <button>Sabay Ko</button>
-                    </div>
-                </div>
-                <div class="bottomCardContainer">
-                    <div class="bottom-leftContainer">
-                        <div class="destinationChart">
-                            <img src="../Icons/Destination.svg" alt="">
-                            <div class="line"></div>
-                            <img src="../Icons/Destination1.svg" alt="">
-                        </div>
-                        <div class="destinationDetails">
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="8px">
-                                    <p>Meeting Location</p>
-                                </div>
-                                <p>University of Southeastern Philippines
-                                    sa may bakeryhan.
-                                </p>
-                            </div>
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="10px">
-                                    <p>Destination</p>
-                                </div>
-                                <p>New Historical Park , sa may jolibee
-                                    mo hunong.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bottom-RighttContainer"> 
-                        <div class="VacantContainer">
-                            <p class="vacant">Vavant</p>
-                            <p>5/6</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-
-            <div class="card">
-                <div class="topCardContainer">
-                    <div class="top-leftContainer">
-                        <h6>Michael C. Labastida</h6>
-                            <div class="status">
-                                <p class="waitining">Waiting</p>
-                                <p>Meeting Time: 8:30 PM</p>
-                            </div>
-                    </div>  
-                    <div class="top-RighttContainer"> 
-                        <button>Sabay Ko</button>
-                    </div>
-                </div>
-                <div class="bottomCardContainer">
-                    <div class="bottom-leftContainer">
-                        <div class="destinationChart">
-                            <img src="../Icons/Destination.svg" alt="">
-                            <div class="line"></div>
-                            <img src="../Icons/Destination1.svg" alt="">
-                        </div>
-                        <div class="destinationDetails">
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="8px">
-                                    <p>Meeting Location</p>
-                                </div>
-                                <p>University of Southeastern Philippines
-                                    sa may bakeryhan.
-                                </p>
-                            </div>
-                            <div class="meetinPlace">
-                                <div class="cardMeeting">
-                                    <img src="../Icons/location.svg" alt="" width="10px">
-                                    <p>Destination</p>
-                                </div>
-                                <p>New Historical Park , sa may jolibee
-                                    mo hunong.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bottom-RighttContainer"> 
-                        <div class="VacantContainer">
-                            <p class="vacant">Vavant</p>
-                            <p>5/6</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         
     </div>
@@ -226,3 +132,9 @@
     </script>
 </body>
 </html>
+
+<?php
+
+
+
+?>

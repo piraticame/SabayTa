@@ -31,7 +31,7 @@ require_once('db.php');
 
             <div class="mainInfo">
                 <img src="../Icons/logo.svg" alt="" class="img2" width="320px">
-                <a href="LoginPage.html"><button>Login</button></a>
+                <a href="LoginPage.php"><button>Login</button></a>
                 <p>Doesn’t have account? <span style="color: white;"><a href="FirstRegister.php">Create Account</a></span></p>
             </div>
 

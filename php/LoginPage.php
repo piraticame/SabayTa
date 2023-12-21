@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once('db.php');
+include('Ascon.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +25,9 @@
 <body>
     <div class="wrapper">
         <div class="headerContent">
-            <a href="HomePage.html"><img src="../Icons/arrowLeft.svg" alt=""></a>
+            <a href="HomePage.php"><img src="../Icons/arrowLeft.svg" alt=""></a>
         </div>
+        <form action="" method="POST">
         <div class="loginFormDetails">
             <h1>Let's Sign you in.</h1>
             <h6 class="welcomeText">Welcome Back!</h6>
@@ -29,24 +36,63 @@
         <div class="loginFormContainer">
             <div class="usernameLog">
                 <p>Username</p>
-                <input type="text" name="" id="">
+                <input type="text" name="username" id="username" required>
             </div>
 
             <div class="passwordLog">
                 <p>Password</p>
-                <input type="text" name="" id="">
+                <input type="password" name="password" id="password" required>
                 <p class="forgotPass">Forgot Password</p>
             </div>
 
-            <div class="erroMessage">
-                <p>Yawaa ka howard</p>
+            <div class="erroMessage" hidden>
+                <p>Wrong username/password</p>
             </div>
         </div>
 
         <div class="footer">
-            <p>Doesn’t have account? <span style="color: white;"><a href="../html/FirstRegister.html">Create Account</a></span></p>
-            <button>Login</button>
+            <p>Doesn’t have account? <span style="color: white;"><a href="FirstRegister.php">Create Account</a></span></p>
+            <button type="submit" name="submit">Login</button>
         </div>
+        </form>
     </div>
 </body>
 </html>
+<?php 
+
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Fetch the encrypted password from the database based on the username
+    $sql = "SELECT * FROM users WHERE username = '$username'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        // Check if the username is found
+        if ($row = mysqli_fetch_assoc($result)) {
+            // Get the encrypted password from the database 
+            $storedPassword = $row['password'];
+
+            // Decrypt the stored password
+            $decryptedPassword = Ascon::decryptFromHex($secretKey, $storedPassword, "additionalData", "Ascon-128");
+
+            if (!is_null($decryptedPassword) && $decryptedPassword == $password) {
+                // Passwords match, set session and redirect
+                $_SESSION['username'] = $username;
+                header('Location: MainPage.php');
+            } else {
+                echo "<script>alert('Incorrect password.');</script>";
+            }
+        } else {
+            echo "<script>alert('Username not found.');</script>";
+        }
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
+
+
+
+
+?>

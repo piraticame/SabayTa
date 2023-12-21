@@ -63,7 +63,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     // Encrypt user credentials
     $encryptedUsername =  $username;
-    $encryptedPassword = Ascon::encryptToHex($secretKey, $password);
+    $encryptedPassword = Ascon::encryptToHex($secretKey, $password, "additionalData", "Ascon-128");
 
     // Process file upload
     if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) {
@@ -85,7 +85,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         echo 'No file uploaded.';
     }
 
-    $encryptedpath = Ascon::encryptToHex($secretKey, $targetPath);
+    $encryptedpath = Ascon::encryptToHex($secretKey, $targetPath, "additionalData", "Ascon-128");
     // Insert encrypted data and file path into the database
     $sql = "INSERT INTO users (username, password, profile)
             VALUES ('$encryptedUsername', '$encryptedPassword', '$encryptedpath')";
@@ -97,7 +97,7 @@ if ($conn->query($sql) === TRUE) {
     echo "<script>
             Swal.fire({
                 icon: 'success',
-                title: 'Registration Successful!',
+                title: 'Account made!',
                 text: 'Your account has been created.',
                 confirmButtonText: 'OK'
             }).then(() => {

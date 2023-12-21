@@ -14,29 +14,58 @@ if ($conn->query($sql) === TRUE) {
 $select = mysqli_select_db($conn, "sabaytadb");
 
 //create tables
+// Ensure that the users table is created first
 $sql2 = "CREATE TABLE IF NOT EXISTS users (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(30) NOT NULL,
-    firstname VARCHAR(30) NULL,
-    middlename VARCHAR(30) NULL,
-    lastname VARCHAR(30) NULL,
-    gender VARCHAR(30) NULL,
-    phone VARCHAR(30) NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    firstname VARCHAR(255) NULL,
+    middlename VARCHAR(255) NULL,
+    lastname VARCHAR(255) NULL,
+    gender VARCHAR(255) NULL,
+    phone VARCHAR(255) NULL,
     birthdate DATE NULL,
-    profile VARCHAR(30) NULL,
-
+    profile VARCHAR(255) NULL,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )";
+)";
+
 if ($conn->query($sql2) === TRUE) {
+    // Now create the post table with the foreign key reference
+    $sql3 = "CREATE TABLE IF NOT EXISTS post (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT(6) UNSIGNED NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        meetingTime TIME NOT NULL,
+        fromLocation VARCHAR(255) NULL,
+        toLocation VARCHAR(255) NULL,
+        joinedcount INT(6) UNSIGNED NOT NULL,
+        status VARCHAR(255) NOT NULL,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )";
+    if ($conn->query($sql3) === TRUE) {
+        $sql4 = "CREATE TABLE IF NOT EXISTS joined (
+            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            user_id INT(6) UNSIGNED NOT NULL,
+            post_id INT(6) UNSIGNED NOT NULL,
+            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (post_id) REFERENCES post(id)
+        )";
+        if ($conn->query($sql4) === TRUE) {
+        } else {
+            echo "Error creating joined table: " . $conn->error;
+        }
+    } else {
+        echo "Error creating post table: " . $conn->error;
+    }
+} else {
+    echo "Error creating users table: " . $conn->error;
 }
-// $sql3 = "CREATE TABLE IF NOT EXISTS uploads (
-//     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//     username VARCHAR(30) NOT NULL,
-//     title VARCHAR(30) NOT NULL,
-//     description VARCHAR(30) NULL,
-//     category VARCHAR(30) NULL,
-//     file VARCHAR(30) NULL,
-//     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-//     )";
+
+//users who joined the post
+
+
+
+    
 ?>

@@ -93,11 +93,11 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['pho
     $user = $_SESSION['username'];
 
     // Encrypt other user details
-    $encryptedFirstname = Ascon::encryptToHex($secretKey, $firstname);
-    $encryptedMiddlename = Ascon::encryptToHex($secretKey, $middlename);
-    $encryptedLastname = Ascon::encryptToHex($secretKey, $lastname);
-    $encryptedPhone = Ascon::encryptToHex($secretKey, $phone);
-    $encryptedGender = Ascon::encryptToHex($secretKey, $gender);
+    $encryptedFirstname = Ascon::encryptToHex($secretKey, $firstname, "additionalData", "Ascon-128");
+    $encryptedMiddlename = Ascon::encryptToHex($secretKey, $middlename, "additionalData", "Ascon-128");
+    $encryptedLastname = Ascon::encryptToHex($secretKey, $lastname, "additionalData", "Ascon-128");
+    $encryptedPhone = Ascon::encryptToHex($secretKey, $phone, "additionalData", "Ascon-128");
+    $encryptedGender = Ascon::encryptToHex($secretKey, $gender, "additionalData", "Ascon-128");
 
     // Update user details based on the decrypted session username
     $sql = "UPDATE users 
@@ -107,16 +107,15 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['pho
 if ($conn->query($sql) === TRUE) {
     // Display SweetAlert notification
     echo "<script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Update Successful!',
-                text: 'Your profile has been updated.',
-                confirmButtonText: 'OK',
-                onClose: () => {
-                    window.location.href = 'MainPage.php';
-                }
-            });
-          </script>";
+    Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful!',
+        text: 'Your profile details has been added.',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        window.location.href = 'LoginPage.php';
+    });
+  </script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
