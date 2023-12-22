@@ -48,7 +48,7 @@ $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <ul class="navItems">
                     <li>
-                        <a href="Mainpage.php">
+                        <a href="MainPage.php">
                             <i class="fa-solid fa-house" style="--i:1" ></i>
         
                         </a>
