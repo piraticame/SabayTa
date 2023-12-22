@@ -5,11 +5,13 @@ $password = "\$s%2Z6c+qKKgptM";
 
 $conn = new mysqli($servername, $name, $password);
 
-$sql = "CREATE DATABASE IF NOT EXISTS u657994792_sabayta";
+//$sql = "CREATE DATABASE IF NOT EXISTS u657994792_sabayta";
+//
+//if ($conn->query($sql) === TRUE) {
+//    $select = mysqli_select_db($conn, "u657994792_sabayta");
+//}
 
-if ($conn->query($sql) === TRUE) {
-    $select = mysqli_select_db($conn, "u657994792_sabayta");
-}
+mysqli_select_db($conn, "u657994792_sabayta");
 
 // create tables
 $sql2 = "CREATE TABLE IF NOT EXISTS users (
