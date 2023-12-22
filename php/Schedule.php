@@ -111,7 +111,7 @@ if ($result) {
                     <p class="meeting-time"><?php echo $post['meetingTime']; ?></p>
                 </div>
             </div>  
-            <form action="viewschedule.php" method="POST">
+            <form action="viewSchedule.php" method="POST">
                 <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
                 <div class="top-RighttContainer"> 
                     <button type="submit" name="view">View Schedule</button>
