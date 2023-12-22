@@ -50,37 +50,37 @@ if ($conn->query($sql2) === TRUE) {
             FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (post_id) REFERENCES post(id)
         )";
-       if ($conn->query($sql4) === TRUE) {
-        $sqlEnableEventScheduler = "SET GLOBAL event_scheduler = ON;";
-        $conn->query($sqlEnableEventScheduler);
-        
-        $sqlCreateEvent = "
-        CREATE EVENT IF NOT EXISTS update_post_status_event
-        ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
-        DO
-        BEGIN
-            UPDATE post SET status = 'Done' WHERE meetingTime < CURTIME() AND status <> 'Done' AND status <> 'Deleted';
-        END;
-    ";
-    
-        if ($conn->query($sqlCreateEvent) === TRUE) {
-            $sqlCreateEventDeleted = "
-            CREATE EVENT IF NOT EXISTS update_post_status_deleted_event
-            ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
-            DO
-            BEGIN
-                UPDATE post SET status = 'Deleted' 
-                WHERE TIMESTAMPDIFF(HOUR, CONCAT(CURDATE(), ' ', meetingTime), NOW()) >= 2 
-                AND status NOT IN ('Deleted', 'Done');
-            END;
-                ";
-        $conn->query($sqlCreateEventDeleted);
-        } else {
-            echo "Error creating trigger: " . $conn->error;
-        }
-    } else {
-        echo "Error creating joined table: " . $conn->error;
-    }
+//        if ($conn->query($sql4) === TRUE) {
+//            $sqlEnableEventScheduler = "SET GLOBAL event_scheduler = ON;";
+//            $conn->query($sqlEnableEventScheduler);
+//
+//            $sqlCreateEvent = "
+//                CREATE EVENT IF NOT EXISTS update_post_status_event
+//                ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
+//                DO
+//                BEGIN
+//                    UPDATE post SET status = 'Done' WHERE meetingTime < CURTIME() AND status <> 'Done' AND status <> 'Deleted';
+//                END;
+//            ";
+//
+//            if ($conn->query($sqlCreateEvent) === TRUE) {
+//                $sqlCreateEventDeleted = "
+//            CREATE EVENT IF NOT EXISTS update_post_status_deleted_event
+//            ON SCHEDULE EVERY 1 MINUTE -- Adjust the frequency as needed
+//            DO
+//            BEGIN
+//                UPDATE post SET status = 'Deleted'
+//                WHERE TIMESTAMPDIFF(HOUR, CONCAT(CURDATE(), ' ', meetingTime), NOW()) >= 2
+//                AND status NOT IN ('Deleted', 'Done');
+//            END;
+//                ";
+//                $conn->query($sqlCreateEventDeleted);
+//            } else {
+//                echo "Error creating trigger: " . $conn->error;
+//            }
+//        } else {
+//            echo "Error creating joined table: " . $conn->error;
+//        }
     } else {
         echo "Error creating post table: " . $conn->error;
     }
