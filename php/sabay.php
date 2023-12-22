@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-require_once 'ascon.php';
+require_once('Ascon.php');
 require_once 'db.php';
 
 $user = $_SESSION['username'];
@@ -78,7 +78,7 @@ if (isset($_POST['view'])) {
                             text: 'You joined this schedule! Please come in the time scheduled.',
                             confirmButtonText: 'OK'
                         }).then(() => {
-                            window.location.href = 'schedule.php';
+                            window.location.href = 'Schedule.php';
                         });
                     </script>";
             exit;
