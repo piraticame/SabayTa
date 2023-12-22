@@ -1,15 +1,15 @@
 <?php
 $servername = "localhost";
-$name = "root";
-$password = "";
+$name = "u657994792_sabayta_admin";
+$password = "\$s%2Z6c+qKKgptM";
 
 $conn = new mysqli($servername, $name, $password);
 
-$sql = "CREATE DATABASE IF NOT EXISTS sabaytadb";
+$sql = "CREATE DATABASE IF NOT EXISTS u657994792_sabayta";
 
 if ($conn->query($sql) === TRUE) {
+    $select = mysqli_select_db($conn, "u657994792_sabayta");
 }
-$select = mysqli_select_db($conn, "sabaytadb");
 
 // create tables
 $sql2 = "CREATE TABLE IF NOT EXISTS users (
