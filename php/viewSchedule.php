@@ -4,7 +4,7 @@ if (!isset($_SESSION['username'])) {
     header('Location: ../index.php');
     exit;
 }
-require_once 'ascon.php';
+require_once('Ascon.php');
 require_once 'db.php';
 
 $user = $_SESSION['username'];
