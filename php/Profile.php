@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <ul class="navItems">
                     <li>
-                        <a href="Mainpage.php">
+                        <a href="MainPage.php">
                             <i class="fa-solid fa-house" style="--i:1" ></i>
                         </a>
                     </li>
