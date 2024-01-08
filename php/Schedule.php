@@ -4,7 +4,7 @@ if (!isset($_SESSION['username'])) {
     header('Location: ../index.php');
     exit;
 }
-require_once 'ascon.php';
+require_once('Ascon.php');
 require_once 'db.php';
 $username = $_SESSION['username'];
 $idSql = "SELECT id FROM users WHERE username = '$username'";
@@ -64,7 +64,7 @@ if ($result) {
 
                 <ul class="navItems">
                     <li>
-                        <a href="Mainpage.php">
+                        <a href="MainPage.php">
                             <i class="fa-solid fa-house" style="--i:1" ></i>
         
                         </a>
@@ -111,7 +111,7 @@ if ($result) {
                     <p class="meeting-time"><?php echo $post['meetingTime']; ?></p>
                 </div>
             </div>  
-            <form action="viewschedule.php" method="POST">
+            <form action="viewSchedule.php" method="POST">
                 <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
                 <div class="top-RighttContainer"> 
                     <button type="submit" name="view">View Schedule</button>

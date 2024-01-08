@@ -4,7 +4,7 @@ if (!isset($_SESSION['username'])) {
     header('Location: ../index.php');
     exit;
 }
-require_once 'ascon.php';
+require_once('Ascon.php');
 require_once 'db.php';
 
 $user = $_SESSION['username'];
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <ul class="navItems">
                     <li>
-                        <a href="Mainpage.php">
+                        <a href="MainPage.php">
                             <i class="fa-solid fa-house" style="--i:1" ></i>
                         </a>
                     </li>
