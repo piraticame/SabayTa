@@ -13,18 +13,14 @@ $result = mysqli_query($conn, $users);
 $users = mysqli_fetch_assoc($result);
 $row = mysqli_num_rows($result);
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Initialize an array to store the updates
     $updates = array();
 
-    // Check each input field and update if not empty
     if (!empty($_POST['firstname'])) {
         $firstname = $_POST['firstname'];
         $encryptedFirstname = Ascon::encryptToHex($secretKey, $firstname, "additionalData", "Ascon-128");
         $updates[] = "firstname = '" . mysqli_real_escape_string($conn, $encryptedFirstname) . "'";
     }
-    //username
     if (!empty($_POST['username'])) {
         $username = $_POST['username'];
         $_SESSION['username'] = $username;
@@ -50,8 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $encryptedPhone = Ascon::encryptToHex($secretKey, $_POST['phone'], "additionalData", "Ascon-128");
         $updates[] = "phone = '" . mysqli_real_escape_string($conn, $encryptedPhone) . "'";
     }
+    if (!empty($_POST['password'])) {
+        $password = $_POST['password'];
+        $encryptedPassword = Ascon::encryptToHex($secretKey, $password, "additionalData", "Ascon-128");
+        $updates[] = "password = '" . mysqli_real_escape_string($conn, $encryptedPassword) . "'";
+    }
 
-    // Update the user information if there are any changes
     if (!empty($updates)) {
         $updateSql = "UPDATE users SET " . implode(', ', $updates) . " WHERE username = '$user'";
         $updateResult = mysqli_query($conn, $updateSql);
@@ -101,11 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- Your HTML form remains unchanged -->
-
-
-<!-- Your HTML form remains unchanged -->
-
 
 
 <!DOCTYPE html>
@@ -114,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- LINKS/CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -174,9 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $decryptedProfile = Ascon::decryptFromHex($secretKey, $userprofile, "additionalData", "Ascon-128");
                         echo $decryptedProfile;
                         ?>"  alt="" class="userprofile">
-                        <!-- <input type="file">
-                        <img src="../Icons/editblack.svg" alt="" width="30px" class="edit">
-                        </button> -->
+                     
                     </div>
                     <h2 style="text-align:center;">
                         <?php
